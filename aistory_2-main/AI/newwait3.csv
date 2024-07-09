@@ -1,0 +1,4 @@
+﻿season,flame_sensor_value,humidity,object_temp,ambient_temp,fire
+winter,1,57.4,100,100,
+winter,0,30.4,40.4,25.4,
+winter,1,57.4,50,109.99,
