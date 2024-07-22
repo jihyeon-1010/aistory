@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 # 데이터 로드 및 전처리
 data = pd.read_csv('/content/sample_data/newait2.csv')
 X = data[['season', 'flame_sensor_value', 'humidity', 'object_temp', 'ambient_temp']]
-X = pd.get_dummies(X, columns=['season'])
+X = pd.get_dummies(X, columns=['season']) # 원-핫 인코딩
 y = data['fire']
 
 # 결측치 처리
@@ -28,7 +28,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_
 class Net(nn.Module):
     def __init__(self, input_size):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(input_size, 128)
+        self.fc1 = nn.Linear(input_size, 128)  
         self.dropout1 = nn.Dropout(0.3)
         self.fc2 = nn.Linear(128, 64)
         self.dropout2 = nn.Dropout(0.3)
@@ -199,3 +199,10 @@ new_results_df = pd.DataFrame({'Predicted_Prob': new_predicted_prob.flatten()})
 print("Predictions for new data:")
 print(new_results_df)
 
+import torch.jit
+
+# 모델을 torch.jit.ScriptModule로 변환하여 저정
+scripted_model = torch.jit.script(model)
+torch.jit.save(scripted_model, 'model_5.pht')
+
+torch.save(model.state_dict(), 'model_weight_5.pht')
